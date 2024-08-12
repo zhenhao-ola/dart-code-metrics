@@ -14,19 +14,15 @@ class _Visitor extends RecursiveAstVisitor<void> {
     super.visitInstanceCreationExpression(expression);
 
     final arguments = expression.argumentList.arguments;
-    final isExpanded = expression.staticType?.getDisplayString(
-          withNullability: true,
-        ) ==
-        _expandedClassName;
+    final isExpanded =
+        expression.staticType?.getDisplayString() == _expandedClassName;
 
     final hasOneArgument = arguments.length == 1;
 
     if (isExpanded && hasOneArgument) {
       final expandedChild = arguments.first as NamedExpression;
 
-      final childName = expandedChild.staticType?.getDisplayString(
-        withNullability: true,
-      );
+      final childName = expandedChild.staticType?.getDisplayString();
 
       final child = expandedChild.expression;
       if (child is InstanceCreationExpression) {
